@@ -4,10 +4,85 @@
   <meta charset="utf-8" />
   <title>Dr. Shahid Ansari – Planetary Robotics</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Self-assembling modular robots for lunar exploration and base construction." />
+  <style>
+    :root{--bg:#0F0F0F;--text:#E0E0E0;--accent:#00C6FF;--muted:#9aa0a6}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:980px;margin:0 auto;padding:56px 20px}
+    header{padding:28px 20px;border-bottom:1px solid #222}
+    nav a{color:var(--accent);margin-right:16px;text-decoration:none}
+    h1{font-size:2rem;margin:.2rem 0} h2{color:var(--accent);margin-top:32px}
+    a{color:var(--accent)} .tag{color:var(--muted)}
+    ul{line-height:1.8} footer{border-top:1px solid #222;margin-top:40px;padding:24px 0;color:var(--muted)}
+    .hero{padding-top:16px}
+    .btns a{display:inline-block;margin-right:10px;border:1px solid var(--accent);padding:8px 12px;border-radius:8px}
+    section{scroll-margin-top:80px}
+  </style>
 </head>
 <body>
-  <h1>Dr. Shahid Ansari</h1>
-  <p>Engineering self-assembling intelligence for the Moon and beyond.</p>
-  <p><a href="#projects">Projects</a> • <a href="#contact">Contact</a></p>
+  <header class="wrap">
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Dr. Shahid Ansari</h1>
+      <div class="tag">Planetary Robotics • Modular & Adaptive Robots</div>
+      <p>Engineering self-assembling intelligence for the Moon and beyond.</p>
+      <div class="btns">
+        <a href="#projects">View Projects</a>
+        <a href="#publications">Publications</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>About</h2>
+      <p>Postdoctoral Researcher at Tohoku University (Space Robotics Lab, Moonshot R&amp;D), developing
+         self-regenerating modular robots for lunar base construction. Background in soft–rigid grippers,
+         AI-based perception, and autonomous assembly.</p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <ul>
+        <li><strong>Modular Lunar Robot with Retractable Arm</strong> — ZED X stereo, Jetson Orin NX, Teensy 4.1.</li>
+        <li><strong>AI-Based Terrain Segmentation</strong> — YOLOv8-Seg + Depth (JAXA lunar facility data).</li>
+        <li><strong>Self-Regenerating AI Robot Assembly</strong> — autonomous docking, fault recovery.</li>
+        <li><strong>Hybrid Auxetic–Rigid Gripper (PhD)</strong> — Scotch-yoke actuation, FSR feedback.</li>
+        <li><strong>Extendable Arm for Construction</strong> — lightweight telescopic CFRP mechanism.</li>
+      </ul>
+    </section>
+
+    <section id="publications">
+      <h2>Publications & Patents</h2>
+      <ul>
+        <li>Ansari S. et al., Hybrid soft-rigid gripper for tomato harvesting, <em>Advanced Robotics Research</em>, 2024.</li>
+        <li>Ansari S. et al., Unsupervised terrain clustering (RGB+Depth), <em>ISPARO 2025</em>, Sendai.</li>
+        <li>Retractable CFRP Arm for Modular Lunar Robot Assembly — in prep, 2025.</li>
+        <li>Patent: Hybrid Auxetic–Rigid Metamaterial Gripper, 2024 (IIT Kanpur).</li>
+        <li>Patent: Retractable Arm Mechanism for Modular Robots, filing in progress (Tohoku Univ.).</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        Email: <a href="mailto:your_email@example.com">your_email@example.com</a> ·
+        <a href="https://github.com/shahidansari">GitHub</a> ·
+        <a href="https://linkedin.com/in/">LinkedIn</a> ·
+        Sendai, Japan
+      </p>
+    </section>
+
+    <footer>
+      From Soft Robotics to Lunar Construction — Engineering Adaptive Intelligence for the Next Frontier.
+    </footer>
+  </main>
 </body>
 </html>
