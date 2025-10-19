@@ -2,20 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Dr. Shahid Ansari – Planetary Robotics</title>
+  <title>Dr. Shahid Ansari — Planetary Robotics</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Self-assembling modular robots for lunar exploration and base construction." />
+  <meta name="description" content="Postdoctoral Researcher — Planetary Robotics, Modular & Adaptive Systems, Space Robotics Laboratory, Tohoku University." />
   <style>
-    :root{--bg:#0F0F0F;--text:#E0E0E0;--accent:#00C6FF;--muted:#9aa0a6}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:980px;margin:0 auto;padding:56px 20px}
-    header{padding:28px 20px;border-bottom:1px solid #222}
-    nav a{color:var(--accent);margin-right:16px;text-decoration:none}
-    h1{font-size:2rem;margin:.2rem 0} h2{color:var(--accent);margin-top:32px}
-    a{color:var(--accent)} .tag{color:var(--muted)}
-    ul{line-height:1.8} footer{border-top:1px solid #222;margin-top:40px;padding:24px 0;color:var(--muted)}
-    .hero{padding-top:16px}
-    .btns a{display:inline-block;margin-right:10px;border:1px solid var(--accent);padding:8px 12px;border-radius:8px}
+    :root{--bg:#0F0F0F;--card:#151515;--text:#E0E0E0;--muted:#9aa0a6;--accent:#00C6FF;--line:#242424}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:var(--accent);text-decoration:none} a:hover{opacity:.85}
+    .wrap{max-width:1040px;margin:0 auto;padding:56px 20px}
+    header{border-bottom:1px solid var(--line);padding:18px 0;margin-bottom:8px}
+    nav a{margin-right:18px}
+    h1{font-size:2.2rem;margin:.2rem 0} h2{color:var(--accent);margin-top:34px}
+    .tag{color:var(--muted);margin-bottom:10px}
+    .grid{display:grid;gap:16px}
+    .two{grid-template-columns:1.2fr .8fr} @media(max-width:900px){.two{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+    ul{margin:0;padding-left:20px;line-height:1.7}
+    .pill{display:inline-block;border:1px solid var(--line);padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;color:#d7d7d7}
+    footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0;color:var(--muted)}
+    .btns a{display:inline-block;margin-right:10px;border:1px solid var(--accent);padding:8px 12px;border-radius:10px}
     section{scroll-margin-top:80px}
   </style>
 </head>
@@ -23,66 +28,218 @@
   <header class="wrap">
     <nav>
       <a href="#about">About</a>
-      <a href="#projects">Projects</a>
+      <a href="#interests">Research</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
       <a href="#publications">Publications</a>
+      <a href="#awards">Awards</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main class="wrap">
-    <section class="hero">
-      <h1>Dr. Shahid Ansari</h1>
-      <div class="tag">Planetary Robotics • Modular & Adaptive Robots</div>
-      <p>Engineering self-assembling intelligence for the Moon and beyond.</p>
-      <div class="btns">
-        <a href="#projects">View Projects</a>
-        <a href="#publications">Publications</a>
-        <a href="#contact">Contact</a>
+    <!-- HERO -->
+    <section class="grid two" id="top">
+      <div>
+        <h1>Dr. Shahid Ansari</h1>
+        <div class="tag">Planetary Robotics • Modular & Adaptive Robots • Human–Robot Interaction</div>
+        <p>Postdoctoral Researcher at the Space Robotics Laboratory, Tohoku University (Japan), working in Japan’s Moonshot R&amp;D Program on autonomous, reconfigurable systems for lunar exploration and habitat construction — including a retractable robotic arm and RL-based control.</p>
+        <div class="btns" style="margin-top:10px">
+          <a href="#projects">Key Projects</a>
+          <a href="#publications">Publications</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="card">
+        <strong>At a glance</strong>
+        <ul>
+          <li><b>PhD (Robotics & Automation)</b>, IIT Kanpur — 2025</li>
+          <li><b>M.E. (Engineering Mechanics)</b>, IIEST Shibpur — 2015</li>
+          <li><b>B.Tech (Mechanical)</b>, KEC Dwarahat — 2010</li>
+        </ul>
+        <div style="margin-top:8px">
+          <span class="pill">Space/Planetary Robotics</span>
+          <span class="pill">Modular Robots</span>
+          <span class="pill">Perception &amp; Sensing</span>
+          <span class="pill">Soft/Hybrid Grippers</span>
+          <span class="pill">Mechanism Design</span>
+        </div>
       </div>
     </section>
 
+    <!-- ABOUT -->
     <section id="about">
       <h2>About</h2>
-      <p>Postdoctoral Researcher at Tohoku University (Space Robotics Lab, Moonshot R&amp;D), developing
-         self-regenerating modular robots for lunar base construction. Background in soft–rigid grippers,
-         AI-based perception, and autonomous assembly.</p>
+      <div class="card">
+        <p>I build robots that can operate, assemble, and recover in extreme environments. My PhD introduced an auxetic-structure-based hybrid gripper for harvesting tomato-like soft fruit; my current postdoc research extends those principles to <b>modular, self-assembling lunar robots</b> with perception-driven autonomy.</p>
+      </div>
     </section>
 
+    <!-- RESEARCH INTERESTS -->
+    <section id="interests">
+      <h2>Research Interests</h2>
+      <div class="card">
+        <ul>
+          <li>Agriculture &amp; Planetary Robotics; Robot Perception &amp; Sensing</li>
+          <li>Rehabilitation Robotics &amp; Human–Robot Interaction</li>
+          <li>Mechanism Design; Soft/Hybrid Manipulation</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="grid two">
+        <div class="card">
+          <strong>Programming &amp; Frameworks</strong>
+          <ul>
+            <li>C, Python, MATLAB, LabVIEW; ROS</li>
+          </ul>
+          <strong>Software</strong>
+          <ul>
+            <li>AutoCAD, SolidWorks, Inventor, Adams, Abaqus</li>
+          </ul>
+          <strong>Vision &amp; Learning</strong>
+          <ul>
+            <li>Computer Vision, Machine Learning, Control Theory</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Hardware</strong>
+          <ul>
+            <li>Raspberry Pi 5, Arduino Mega, NVIDIA Jetson Nano / Orin AGX, Intel RealSense, ZED 2, ViperX 300 arm</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <h2>Research & Professional Experience</h2>
+
+      <div class="card">
+        <strong>Postdoctoral Researcher — Tohoku University, Japan</strong> (Feb 2025 – Present)<br/>
+        Space Robotics Laboratory (Moonshot R&amp;D): autonomous, reconfigurable systems for lunar exploration; retractable arm; RL-based control.
+      </div>
+
+      <div class="card">
+        <strong>Visitor (ICRA 2024) — The University of Tokyo</strong> (May 2024) — CDR Lab, iCub VR/telerobotics exploration.
+      </div>
+
+      <div class="card">
+        <strong>Principal Project Associate — IIT Kanpur</strong> (Mar 2024 – …) — DST project on Electric Stubble-Harvester & Integrated Baler.
+      </div>
+
+      <div class="card">
+        <strong>Joint Research Fellow — IIT Kanpur × Yokohama National Univ.</strong> (Mar 2023 – …) — Photoelasticity-based auxetic tactile sensor for soft-fruit grippers.
+      </div>
+
+      <div class="card">
+        <strong>Senior Research Associate — IIT Kanpur</strong> (Jul 2022 – Oct 2022) — Autonomous crop-monitoring & localized pest neutralization (DST).
+      </div>
+
+      <div class="card">
+        <strong>Visiting Researcher — Kyushu Institute of Technology</strong> (Feb 2020) — Brain-Inspired Robotics (Wagatsuma Lab).
+      </div>
+
+      <div class="card">
+        <strong>Research Associate — IIT Kanpur (Center for Mechatronics)</strong> (Nov–Dec 2017) — Exoskeleton for hand rehabilitation (DST).
+      </div>
+
+      <div class="card">
+        <strong>Systems Engineer / Team Lead — IIT Kanpur (SMSS Lab)</strong> (Dec 2016 – Oct 2017) — GAIL pipeline health-monitoring robot; IUSSTF floating water platform.
+      </div>
+
+      <div class="card">
+        <strong>Teaching & Industry</strong>
+        <ul>
+          <li>Teaching Assistant/Tutor (2018–2024) — multiple ME courses at IIT Kanpur.</li>
+          <li>Assistant Professor — Ansal University (2016), KSVCEM (2015–2016), GBPUAT (2010–2013).</li>
+          <li>Design Consultant — Kritsnam Technologies; University of Essex (2017).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECT HIGHLIGHTS -->
     <section id="projects">
-      <h2>Projects</h2>
-      <ul>
-        <li><strong>Modular Lunar Robot with Retractable Arm</strong> — ZED X stereo, Jetson Orin NX, Teensy 4.1.</li>
-        <li><strong>AI-Based Terrain Segmentation</strong> — YOLOv8-Seg + Depth (JAXA lunar facility data).</li>
-        <li><strong>Self-Regenerating AI Robot Assembly</strong> — autonomous docking, fault recovery.</li>
-        <li><strong>Hybrid Auxetic–Rigid Gripper (PhD)</strong> — Scotch-yoke actuation, FSR feedback.</li>
-        <li><strong>Extendable Arm for Construction</strong> — lightweight telescopic CFRP mechanism.</li>
-      </ul>
+      <h2>Key Projects</h2>
+      <div class="grid two">
+        <div class="card">
+          <strong>Auxetic Hybrid Meta-Gripper for Soft Harvesting (PhD)</strong>
+          <ul>
+            <li>New auxetic structure–based hybrid gripper; precision tomato picking.</li>
+            <li>Built on soft robotics, force sensing, and robust mechanism design.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Retractable Robotic Arm for Modular Lunar Robots (Postdoc)</strong>
+          <ul>
+            <li>Lightweight deployable arm for autonomous assembly and docking on the Moon.</li>
+            <li>Integration toward self-regenerating, reconfigurable robot teams.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
+    <!-- PUBLICATIONS -->
     <section id="publications">
-      <h2>Publications & Patents</h2>
-      <ul>
-        <li>Ansari S. et al., Hybrid soft-rigid gripper for tomato harvesting, <em>Advanced Robotics Research</em>, 2024.</li>
-        <li>Ansari S. et al., Unsupervised terrain clustering (RGB+Depth), <em>ISPARO 2025</em>, Sendai.</li>
-        <li>Retractable CFRP Arm for Modular Lunar Robot Assembly — in prep, 2025.</li>
-        <li>Patent: Hybrid Auxetic–Rigid Metamaterial Gripper, 2024 (IIT Kanpur).</li>
-        <li>Patent: Retractable Arm Mechanism for Modular Robots, filing in progress (Tohoku Univ.).</li>
-      </ul>
+      <h2>Publications & Presentations</h2>
+      <div class="card">
+        <ul>
+          <li>Ansari, S. et&nbsp;al., “A New Auxetic Structure-based Hybrid Gripper for Harvesting Tomato-like Soft Fruits,” <em>International Journal of Intelligent Robotics and Applications</em>, 2024 (in progress).</li>
+          <li>“Design & Analysis of a Novel Hybrid Robotic Meta-Gripper…,” <em>Advanced Intelligent Systems</em> (under review).</li>
+          <li>“Multi-objective Optimization of Hybrid Meta-Gripper…,” <em>ASME JMR</em> (under review).</li>
+          <li>“Versatile Morphing Gripper…,” <em>Soft Robotics (SoRo)</em> (in preparation).</li>
+          <li>ICRA 2024 (Poster): Photoelastic auxetic tactile sensor for soft-fruit grippers.</li>
+          <li>AIM 2024 (Accepted): Hybrid gripper with semantic segmentation & keypoint detection.</li>
+          <li>Springer 2022: Tomato-picking soft robotic gripper with iris-based cutting mechanism.</li>
+          <li>ICAR 2017: Earthworm-like modular robot with active surface gripping.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Conference Paper Reviews</strong>
+        <ul>
+          <li>ICRA 2025 — Precision-agriculture autonomy (e.g., SLAM-oriented BEV segmentation).</li>
+          <li>ICRA 2024 — Soft robotics & grippers.</li>
+          <li>SysInt 2022 — AV & mobile robotics; medical imaging segmentation.</li>
+        </ul>
+      </div>
     </section>
 
+    <!-- AWARDS -->
+    <section id="awards">
+      <h2>Awards & Memberships</h2>
+      <div class="grid two">
+        <div class="card">
+          <strong>Awards & Programs</strong>
+          <ul>
+            <li>GATE Fellowship (PG)</li>
+            <li>SAKURA SCIENCE Exchange Fellowship (JST)</li>
+            <li>Best B.Tech Project — Aerial–Terrestrial Spy Robot (2010)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <strong>Memberships</strong>
+          <ul>
+            <li>IEEE • IEEE RAS • Robotics Society of India • Sakura Science Club • AME (IITK)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
     <section id="contact">
       <h2>Contact</h2>
-      <p>
-        Email: <a href="mailto:your_email@example.com">your_email@example.com</a> ·
-        <a href="https://github.com/shahidansari">GitHub</a> ·
-        <a href="https://linkedin.com/in/">LinkedIn</a> ·
-        Sendai, Japan
-      </p>
+      <div class="card">
+        <p>
+          📧 <a href="mailto:shahid@iitk.ac.in">shahid@iitk.ac.in</a> &nbsp;|&nbsp;
+          ☎️ <a href="tel:+918630038818">+91 8630038818</a> &nbsp;|&nbsp;
+          🔗 <a href="https://www.linkedin.com/in/shahid-ansari-aa48921a6">LinkedIn</a>
+        </p>
+        <p class="tag">SMSS Lab, IIT Kanpur, Kanpur, Uttar Pradesh 208016, India</p>
+      </div>
     </section>
 
     <footer>
-      From Soft Robotics to Lunar Construction — Engineering Adaptive Intelligence for the Next Frontier.
-    </footer>
-  </main>
-</body>
-</html>
+      From Soft Robo
