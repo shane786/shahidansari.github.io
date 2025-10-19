@@ -91,7 +91,7 @@
       pointer-events:none;
     }
 
-    /* ===== Header (planet + orbit) ===== */
+    /* ===== Header (planet + orbit + switch) ===== */
     header{
       position:relative;overflow:hidden;
       padding:28px;border:1px solid var(--border);
@@ -113,7 +113,6 @@
     }
     @keyframes orbit{to{transform:rotate(385deg)}}
 
-    /* Theme Switch */
     .theme-switch{
       display:flex;gap:8px;align-items:center;position:absolute;left:16px;top:16px
     }
@@ -191,6 +190,48 @@
     .inst-name{font-size:.96rem;color:var(--muted);white-space:nowrap}
     .inst-card a{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
     .inst-card a:hover{text-decoration:none}
+
+    /* ====== Section background helpers ====== */
+    .section-bg {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #000; /* fallback */
+      padding-top: 0; /* keep h2 at top edge */
+    }
+    .section-bg::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: var(--bg-img);
+      background-size: cover; background-position: center;
+      background-attachment: fixed; /* parallax on desktop */
+      filter: saturate(1.05) contrast(1.05) brightness(0.9);
+      opacity: 0.35; /* behind content */
+      z-index: 0;
+    }
+    .section-bg .content {
+      position: relative; z-index: 1;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.08));
+      border-radius: 14px;
+    }
+    [data-theme="moon"] .section-bg::after,
+    [data-theme="mars"] .section-bg::after {
+      content: ""; position: absolute; inset: 0; z-index: 0;
+      pointer-events: none;
+    }
+    [data-theme="moon"] .section-bg::after {
+      background: radial-gradient(60% 40% at 50% 0%,
+                  rgba(124,199,255,.12), transparent 70%);
+    }
+    [data-theme="mars"] .section-bg::after {
+      background: radial-gradient(60% 40% at 50% 0%,
+                  rgba(255,159,67,.14), transparent 70%);
+    }
+    @media (max-width: 800px){
+      .section-bg::before { background-attachment: scroll; }
+    }
   </style>
 
   <!-- Structured data -->
@@ -291,10 +332,13 @@
       </div>
     </section>
 
-    <!-- Your existing sections (unchanged markup) -->
-    <section id="summary">
+    <!-- Research Summary with background -->
+    <section id="summary" class="section-bg"
+      style="--bg-img: url('/assets/bg/moon_outpost.jpg')"
+      data-moon="/assets/bg/moon_outpost.jpg"
+      data-mars="/assets/bg/mars_outpost.jpg">
       <h2>Research Summary</h2>
-      <div class="card">
+      <div class="card content">
         <p>I develop <b>autonomous robotic systems</b> for unstructured and extraterrestrial environments, integrating <b>mechanism design, sensing, and AI-based control</b>. My work spans <b>soft and reconfigurable robotics</b>, <b>robot perception</b>, and <b>reinforcement learning for adaptive autonomy</b>. At the <b>Space Robotics Laboratory (SRL), Tohoku University</b>, I contribute to Japan’s Moonshot R&amp;D Program on <b>reconfigurable robotic arms and intelligent control</b> for lunar surface operations. My goal is to advance <b>resilient robotic manipulation and mobility</b> for planetary exploration and human–robot collaboration.</p>
       </div>
     </section>
@@ -390,6 +434,52 @@
             <div class="muted">Exoskeleton robot for human hand support and rehabilitation (DST-funded).</div>
           </li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Projects with background -->
+    <section id="projects" class="section-bg"
+      style="--bg-img: url('/assets/bg/research_scene.png')">
+      <h2>Key Projects</h2>
+      <div class="content">
+        <div class="grid-2">
+          <div class="card">
+            <strong>Auxetic Hybrid Meta-Gripper for Soft Harvesting (PhD)</strong>
+            <ul>
+              <li>New auxetic structure–based hybrid gripper; precision tomato picking.</li>
+              <li>Built on soft robotics, force sensing, and robust mechanism design.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>Retractable Robotic Arm for Modular Lunar Robots (Postdoc)</strong>
+            <ul>
+              <li>Lightweight deployable arm for autonomous assembly and docking on the Moon.</li>
+              <li>Integration toward self-regenerating, reconfigurable robot teams.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>AI-Based Terrain Segmentation</strong>
+            <ul>
+              <li>YOLOv8-Seg + Depth for lunar-like terrain classification (ZED data).</li>
+              <li>Supports terrain-aware navigation and path planning.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>Self-Regenerating AI Robot Assembly</strong>
+            <ul>
+              <li>Cooperative docking, fault detection, and recovery.</li>
+              <li>Exploring VLMs for task-level decisions in reassembly.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Optional close-up background strip -->
+    <section class="section-bg" style="--bg-img: url('/assets/bg/moonbot.png')">
+      <h2>Modular Robot Close-up</h2>
+      <div class="content">
+        <p>Multi-limbed modular robot for terrain interaction and docking.</p>
       </div>
     </section>
 
@@ -501,26 +591,32 @@
     </section>
 
     <footer>
-      &copy; 2025 Shahid Ansari • Last updated: 19 Oct 2025
+      &copy; 2025 Shahid Ansari • Images: © Tohoku University Space Robotics Lab / Moonshot Project (used for academic portfolio). • Last updated: 19 Oct 2025
     </footer>
   </div>
 
   <script>
-    // Theme switcher (Moon <-> Mars)
-    const root = document.documentElement;
+    // Theme switcher (Moon <-> Mars) with image swapping support
     const btns = document.querySelectorAll('.toggle');
+
     function setTheme(t){
       document.documentElement.setAttribute('data-theme', t);
       btns.forEach(b => b.classList.toggle('active', b.dataset.setTheme === t));
-      // Persist choice
+      // Swap section background images if data-moon/data-mars are provided
+      document.querySelectorAll('.section-bg').forEach(s=>{
+        const alt = s.dataset[t];
+        if(alt){ s.style.setProperty('--bg-img', `url('${alt}')`); }
+      });
       try{ localStorage.setItem('planet-theme', t); }catch(e){}
     }
+
     // Restore previous choice
-    try{
-      const t = localStorage.getItem('planet-theme');
-      if(t){ setTheme(t); }
-      else { setTheme('moon'); }
-    }catch(e){ setTheme('moon'); }
+    (function(){
+      let t = 'moon';
+      try{ t = localStorage.getItem('planet-theme') || 'moon'; }catch(e){}
+      setTheme(t);
+    })();
+
     // Wire clicks
     btns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
   </script>
