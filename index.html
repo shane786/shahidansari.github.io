@@ -3,278 +3,622 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shahid Ansari — Space Robotics Portfolio</title>
-  <meta name="description" content="Portfolio of Shahid Ansari — Postdoctoral Researcher in Space Robotics at Tohoku University (SRL Moonshot Program).">
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <title>Shahid Ansari — Space Robotics</title>
+  <meta name="description" content="Portfolio of Shahid Ansari, Postdoctoral Researcher in Space Robotics at Tohoku University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ====== THEME COLORS ====== */
-    [data-theme="moon"] {
-      --bg: #060815; --text: #e8eef9; --muted: #9fb0cf;
-      --accent: #7cc7ff; --accent2: #a78bfa; --border: rgba(124,199,255,0.25);
-      --panel: rgba(16,24,48,0.6); --glow: 0 0 25px rgba(124,199,255,0.25);
-      --ring: rgba(124,199,255,0.3);
+    /* =========================================================
+       SPACE UI THEME — Moon <-> Mars (toggle via [data-theme])
+       ========================================================= */
+    :root{
+      --radius:16px;
+      --glow-moon:0 0 20px rgba(124,199,255,.25),0 0 40px rgba(167,139,250,.12);
+      --glow-mars:0 0 24px rgba(255,135,66,.25),0 0 46px rgba(255,99,99,.14);
+      --line-alpha: .18;
     }
-    [data-theme="mars"] {
-      --bg: #0b0810; --text: #f9efe7; --muted: #d8bba8;
-      --accent: #ff9f43; --accent2: #ff6b6b; --border: rgba(255,159,67,0.25);
-      --panel: rgba(48,24,16,0.6); --glow: 0 0 25px rgba(255,159,67,0.25);
-      --ring: rgba(255,159,67,0.3);
+    /* Default (Moon) */
+    [data-theme="moon"]{
+      --bg:#060815;
+      --text:#e8eef9;
+      --muted:#9fb0cf;
+      --accent:#7cc7ff;    /* ion blue */
+      --accent-2:#a78bfa;  /* violet */
+      --panel:rgba(16,24,48,.55);
+      --border:rgba(140,180,255,var(--line-alpha));
+      --chip:rgba(35,56,104,.55);
+      --glow:var(--glow-moon);
+      --horizon: radial-gradient(60% 25% at 50% 100%, rgba(124,199,255,.12), transparent 70%);
+      --star1:#bfe1ff; --star2:#cbbdff; --star3:#b3d4ff; --star4:#9fd7ff;
+      --planet-grad: radial-gradient(circle at 35% 35%, #bfe6ff 0%, #7cc7ff 40%, #325aa0 68%, #121b3d 100%);
+      --ring-color: rgba(124,199,255,.22);
     }
-
-    body {
-      margin: 0; background: var(--bg); color: var(--text);
-      font-family: "Inter", sans-serif; line-height: 1.6;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .wrap { max-width: 1100px; margin: auto; padding: 24px; }
-
-    h1, h2 { font-family: "Orbitron", sans-serif; margin-top: 0; }
-    h2 { margin-top: 40px; color: var(--accent2); }
-
-    header {
-      background: var(--panel); border: 1px solid var(--border);
-      border-radius: 14px; padding: 20px; position: relative;
-      box-shadow: var(--glow);
-    }
-    .planet { position:absolute; right:-60px; top:-60px; width:200px; height:200px; border-radius:50%; background: var(--accent2); opacity:0.2; }
-    .role { color: var(--muted); }
-
-    /* Chips */
-    .chip {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 10px; border-radius: 999px;
-      border: 1px solid var(--border); background: var(--panel);
-      margin: 4px 4px 4px 0; font-size: 0.9rem;
-    }
-
-    section { margin-top: 36px; border-top: 1px solid var(--border); padding-top: 20px; }
-
-    .card {
-      background: var(--panel); border-radius: 14px;
-      border: 1px solid var(--border); padding: 16px;
-      margin-bottom: 14px;
+    /* Mars */
+    [data-theme="mars"]{
+      --bg:#0b0810;
+      --text:#f6efea;
+      --muted:#d9c3b7;
+      --accent:#ff9f43;    /* dune orange */
+      --accent-2:#ff6b6b;  /* hot red */
+      --panel:rgba(38,18,16,.55);
+      --border:rgba(255,158,100,var(--line-alpha));
+      --chip:rgba(78,38,28,.52);
+      --glow:var(--glow-mars);
+      --horizon: radial-gradient(60% 25% at 50% 100%, rgba(255,159,67,.14), transparent 70%);
+      --star1:#ffe9cc; --star2:#ffd3bf; --star3:#ffd9a1; --star4:#ffc9a6;
+      --planet-grad: radial-gradient(circle at 42% 28%, #ffcf9c 0%, #ff9f43 35%, #b4432c 65%, #3a0e0a 100%);
+      --ring-color: rgba(255,159,67,.24);
     }
 
-    .skills span {
-      display:inline-block; background: var(--accent2); color:#fff;
-      padding:4px 10px; border-radius:10px; margin:4px; font-size:0.85rem;
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;padding:0;
+      background:
+        radial-gradient(1200px 900px at 80% 10%, rgba(100,120,220,.12) 0%, transparent 60%),
+        radial-gradient(900px 700px at 10% 90%, rgba(150,80,220,.11) 0%, transparent 55%),
+        var(--bg);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      line-height:1.55
+    }
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    h1,h2{letter-spacing:.3px}
+    h1{font-family:Orbitron,Inter,system-ui,sans-serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,2.6rem);margin:0}
+    h2{font-family:Orbitron,Inter,system-ui,sans-serif;font-size:clamp(1.2rem,2.1vw,1.5rem);margin:0 0 14px 0;color:#dbe7ff}
+    .role{color:var(--muted);font-weight:600}
+
+    /* ===== Parallax Stars & Horizon Glow ===== */
+    .stars, .stars2, .stars3{
+      position:fixed;inset:0;z-index:-3;background-repeat:repeat;
+      background-image:
+        radial-gradient(1px 1px at 20px 30px, var(--star1) 30%, transparent 31%),
+        radial-gradient(1px 1px at 80px 120px, var(--star2) 30%, transparent 31%),
+        radial-gradient(1px 1px at 200px 50px, var(--star3) 30%, transparent 31%),
+        radial-gradient(1px 1px at 300px 200px, var(--star4) 30%, transparent 31%);
+      animation: drift 120s linear infinite; opacity:.55;
+      pointer-events:none;
+    }
+    .stars2{filter:blur(0.3px);opacity:.45;animation-duration:180s}
+    .stars3{filter:blur(1px);opacity:.35;animation-duration:240s}
+    @keyframes drift{from{background-position:0 0} to{background-position:-1000px -600px}}
+    .horizon{
+      position:fixed;left:0;right:0;bottom:0;height:40vh;z-index:-2;
+      background:var(--horizon);
+      pointer-events:none;
     }
 
-    footer {
-      text-align: center; color: var(--muted);
-      margin: 40px 0 20px; font-size: 0.9rem;
+    /* ===== Header (planet + orbit + switch) ===== */
+    header{
+      position:relative;overflow:hidden;
+      padding:28px;border:1px solid var(--border);
+      background:linear-gradient(180deg,var(--panel),rgba(8,12,24,.6));
+      border-radius:var(--radius);box-shadow:var(--glow)
+    }
+    .planet{
+      position:absolute;right:-90px;top:-100px;width:260px;height:260px;border-radius:50%;
+      background:var(--planet-grad);
+      box-shadow:inset -18px -22px 40px rgba(0,0,0,.35), 0 0 120px rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .ring{
+      position:absolute;right:-55px;top:8px;width:340px;height:340px;border-radius:50%;
+      border:1px dashed var(--ring-color);
+      transform:rotate(25deg);
+      animation:orbit 28s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes orbit{to{transform:rotate(385deg)}}
+
+    .theme-switch{
+      display:flex;gap:8px;align-items:center;position:absolute;left:16px;top:16px
+    }
+    .toggle{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      color:var(--text);
+      border-radius:14px;padding:6px 10px;font-size:.85rem;
+      cursor:pointer;backdrop-filter:blur(6px)
+    }
+    .toggle.active{box-shadow:var(--glow)}
+
+    /* ===== Chips ===== */
+    .contact{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border:1px solid var(--border);
+      background:var(--chip);backdrop-filter:blur(6px);
+      border-radius:999px;font-size:.92rem;color:var(--text);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .chip:hover{transform:translateY(-1px);box-shadow:var(--glow)}
+    .chip svg{width:16px;height:16px;opacity:.9}
+
+    /* ===== Sections / cards ===== */
+    section{margin-top:30px;border-top:1px solid var(--border);padding-top:22px}
+    .card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(18,28,60,.45), rgba(10,16,38,.45));
+      backdrop-filter:blur(8px);
+      border-radius:14px;padding:16px;box-shadow:var(--glow)
+    }
+    .grid-2{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+    ul.clean{list-style:none;padding:0;margin:0}
+    ul.clean li+li{margin-top:12px}
+    .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .when{color:var(--muted);white-space:nowrap}
+    .title{font-weight:700}
+    .muted{color:var(--muted)}
+    .skills{display:flex;flex-wrap:wrap;gap:10px}
+    .tag{
+      background:linear-gradient(180deg, rgba(36,56,120,.32), rgba(26,40,88,.28));
+      border:1px solid var(--border);padding:4px 10px;border-radius:10px;
+      font-size:.88rem;color:#d5e6ff
+    }
+    .pub-title{font-style:italic}
+    .badge{
+      display:inline-block;margin-left:8px;padding:2px 8px;border-radius:8px;font-size:.78rem;
+      color:#0b1223;background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      box-shadow:0 0 20px rgba(124,199,255,.26)
+    }
+    footer{margin:42px 0;color:var(--muted);font-size:.9rem;text-align:center}
+
+    section>h2::after{
+      content:"";display:block;height:1px;margin-top:10px;
+      background:linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity:.35
     }
 
-    /* ==== Gallery ==== */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
+    /* === Institutional logo strip === */
+    .inst-strip{ margin-top:16px; display:flex;flex-wrap:wrap;gap:14px;align-items:center }
+    .inst-card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(18,28,60,.40), rgba(10,16,38,.40));
+      backdrop-filter:blur(8px);
+      border-radius:12px;
+      padding:12px 16px;
+      display:flex;align-items:center;gap:12px;
+      box-shadow:var(--glow);
+      transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
     }
-    .gallery figure {
-      margin: 0; border-radius: 12px; overflow: hidden;
-      border: 1px solid var(--border); background: var(--panel);
-      cursor: pointer; transition: transform .3s;
-    }
-    .gallery figure:hover { transform: scale(1.03); }
-    .gallery img { width: 100%; height: 180px; object-fit: cover; }
-    .gallery figcaption {
-      padding: 6px 10px; font-size: 0.9rem; color: var(--muted);
-    }
+    .inst-card:hover{ transform:translateY(-1px); box-shadow:0 0 22px var(--accent) }
+    .inst-card img{ height:30px; width:auto; display:block; filter:grayscale(10%) contrast(105%); }
+    .inst-name{font-size:.96rem;color:var(--muted);white-space:nowrap}
+    .inst-card a{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
+    .inst-card a:hover{text-decoration:none}
 
-    /* Lightbox */
-    .lightbox {
-      position: fixed; inset: 0; display: none;
-      align-items: center; justify-content: center;
-      background: rgba(0, 0, 0, 0.75); z-index: 1000;
-    }
-    .lightbox.open { display: flex; }
-    .lightbox img {
-      max-width: 90vw; max-height: 85vh; border-radius: 10px;
-      border: 2px solid var(--border);
-    }
-    .lightbox .caption {
-      text-align: center; color: var(--text);
-      margin-top: 10px; font-size: 0.95rem;
-    }
-    .lightbox button {
-      position: absolute; top: 15px;
-      background: var(--panel); color: var(--text);
-      border: 1px solid var(--border); border-radius: 8px;
-      padding: 6px 12px; cursor: pointer;
-    }
-    .close-btn { right: 20px; }
-    .prev-btn { left: 20px; top: 50%; transform: translateY(-50%); }
-    .next-btn { right: 20px; top: 50%; transform: translateY(-50%); }
-
-    /* Background section */
+    /* ====== Section background helpers ====== */
     .section-bg {
-      position: relative; border-radius: 14px; overflow: hidden;
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
       border: 1px solid var(--border);
+      background: #000; /* fallback */
+      padding-top: 0; /* keep h2 at top edge */
     }
     .section-bg::before {
-      content: ""; position: absolute; inset: 0;
-      background-size: cover; background-position: center;
+      content: "";
+      position: absolute; inset: 0;
       background-image: var(--bg-img);
-      opacity: 0.3; z-index: 0;
+      background-size: cover; background-position: center;
+      background-attachment: fixed; /* parallax on desktop */
+      filter: saturate(1.05) contrast(1.05) brightness(0.9);
+      opacity: 0.35; /* behind content */
+      z-index: 0;
     }
-    .section-bg .content { position: relative; z-index: 1; padding: 18px; }
+    .section-bg .content {
+      position: relative; z-index: 1;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.08));
+      border-radius: 14px;
+    }
+    [data-theme="moon"] .section-bg::after,
+    [data-theme="mars"] .section-bg::after {
+      content: ""; position: absolute; inset: 0; z-index: 0;
+      pointer-events: none;
+    }
+    [data-theme="moon"] .section-bg::after {
+      background: radial-gradient(60% 40% at 50% 0%,
+                  rgba(124,199,255,.12), transparent 70%);
+    }
+    [data-theme="mars"] .section-bg::after {
+      background: radial-gradient(60% 40% at 50% 0%,
+                  rgba(255,159,67,.14), transparent 70%);
+    }
+    @media (max-width: 800px){
+      .section-bg::before { background-attachment: scroll; }
+    }
   </style>
-</head>
 
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Shahid Ansari",
+    "jobTitle":"Postdoctoral Researcher — Space Robotics",
+    "affiliation":[{"@type":"Organization","name":"Space Robotics Laboratory (SRL), Tohoku University"}],
+    "email":"mailto:ansari.shahid.b2@tohoku.ac.jp",
+    "url":"https://astro2.mech.tohoku.ac.jp/en",
+    "sameAs":["https://www.linkedin.com/in/shahid-ansari-aa48921a6"]
+  }
+  </script>
+</head>
 <body>
+  <!-- layered starfield & horizon -->
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+  <div class="horizon"></div>
+
   <div class="wrap">
     <header>
-      <div class="planet"></div>
+      <div class="theme-switch" aria-label="Theme Switch">
+        <button class="toggle" data-set-theme="moon">🌕 Moon</button>
+        <button class="toggle" data-set-theme="mars">🪐 Mars</button>
+      </div>
+      <div class="planet" aria-hidden="true"></div>
+      <div class="ring" aria-hidden="true"></div>
+
       <h1>Shahid Ansari</h1>
-      <div class="role">Postdoctoral Researcher — Space Robotics Lab, Tohoku University</div>
-      <div>
-        <span class="chip">📍 Sendai, Japan</span>
-        <span class="chip">📧 ansari.shahid.b2@tohoku.ac.jp</span>
-        <a href="https://www.linkedin.com/in/shahid-ansari-aa48921a6" class="chip">🔗 LinkedIn</a>
+      <div class="role">Postdoctoral Researcher — Space Robotics</div>
+
+      <div class="contact" aria-label="Contact and links">
+        <span class="chip" title="Address">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/></svg>
+          Space Robotics Laboratory (SRL), Tohoku University • Sendai, Japan
+        </span>
+        <a class="chip" href="tel:+819066831984">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.26 11.7 11.7 0 0 0 3.7.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 8a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.7 11.7 0 0 0 .6 3.7 1 1 0 0 1-.26 1l-2.24 2.1z"/></svg>
+          +81 90-6683-1984
+        </a>
+        <a class="chip" href="mailto:ansari.shahid.b2@tohoku.ac.jp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16a2 2 0 0 1 2 2v.3l-10 6.25L2 8.3V8a2 2 0 0 1 2-2zm16 12H4a2 2 0 0 1-2-2V9.6l10 6.25 10-6.25V16a2 2 0 0 1-2 2z"/></svg>
+          ansari.shahid.b2@tohoku.ac.jp
+        </a>
+        <a class="chip" href="https://www.linkedin.com/in/shahid-ansari-aa48921a6" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 7.94A1.94 1.94 0 1 1 6.93 4a1.94 1.94 0 0 1 .01 3.94zM4.99 9h3.9v10h-3.9zM13 9c-2.2 0-3.7 1.2-3.7 4v6h3.9v-5c0-1.2.6-2 1.8-2 1.1 0 1.7.7 1.7 2v5h3.9v-5.9C20.6 10.6 18.9 9 16.2 9 14.9 9 13.8 9.6 13 10.5V9z"/></svg>
+          LinkedIn
+        </a>
+        <a class="chip" href="https://astro2.mech.tohoku.ac.jp/en" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17.9V13h4.9A8.01 8.01 0 0 1 13 19.9zM11 19.9A8.01 8.01 0 0 1 6.1 13H11v6.9zM6.1 11A8.01 8.01 0 0 1 11 4.1V11H6.1zM13 11V4.1A8.01 8.01 0 0 1 17.9 11H13z"/></svg>
+          Homepage
+        </a>
+        <span class="chip" title="Citizenship">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v14H3zM5 7v10h14V7z"/></svg>
+          Citizenship: Indian
+        </span>
       </div>
     </header>
 
-    <!-- Education -->
-    <section id="education">
-      <h2>Education</h2>
-      <div class="card">
-        <b>Ph.D. — IIT Kanpur (2025)</b><br>
-        Thesis: Hybrid Meta-Gripper for Tomato Harvesting
-      </div>
-      <div class="card">
-        <b>M.E. — IIEST Shibpur (2015)</b><br>
-        Research: Lower Limb Exoskeleton Design
-      </div>
-      <div class="card">
-        <b>B.Tech — Kumaon Engineering College (2010)</b>
-      </div>
-    </section>
-
-    <!-- Research Interests -->
-    <section id="interests">
-      <h2>Research Interests</h2>
-      <div class="card skills">
-        <span>Space Robotics</span><span>Planetary Manipulation</span>
-        <span>Soft Robotics</span><span>Mechanism Design</span>
-        <span>AI Control</span><span>Reconfigurable Systems</span>
-      </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" class="section-bg" style="--bg-img:url('/assets/bg/research_scene.png')">
-      <h2>Key Projects</h2>
-      <div class="content">
-        <div class="card"><b>Retractable Robotic Arm for Modular Lunar Robots</b><br>
-        Lightweight CFRP bistable mechanism for self-deploying robotic assembly.</div>
-
-        <div class="card"><b>Auxetic Hybrid Meta-Gripper for Soft Harvesting</b><br>
-        New auxetic-structure hybrid gripper for delicate fruit harvesting.</div>
-
-        <div class="card"><b>AI-Based Terrain Segmentation</b><br>
-        YOLOv8-Seg + ZED X depth fusion for lunar regolith classification.</div>
-      </div>
-    </section>
-
-    <!-- Gallery -->
-    <section id="gallery" class="section-bg" style="--bg-img:url('/assets/bg/moon_outpost.jpg')">
-      <h2>Gallery — Lunar & Martian Operations</h2>
-      <div class="content gallery">
-        <div class="gallery-grid" id="galleryGrid">
-          <figure data-full="/assets/gallery/moon_outpost_full.jpg">
-            <img src="/assets/gallery/moon_outpost_thumb.jpg" alt="">
-            <figcaption>Lunar Outpost Construction</figcaption>
-          </figure>
-          <figure data-full="/assets/gallery/rover_docking_full.jpg">
-            <img src="/assets/gallery/rover_docking_thumb.jpg" alt="">
-            <figcaption>Rover Docking</figcaption>
-          </figure>
-          <figure data-full="/assets/gallery/arm_deploy_full.jpg">
-            <img src="/assets/gallery/arm_deploy_thumb.jpg" alt="">
-            <figcaption>Retractable Arm Deployment</figcaption>
-          </figure>
-          <figure data-full="/assets/gallery/terrain_seg_full.jpg">
-            <img src="/assets/gallery/terrain_seg_thumb.jpg" alt="">
-            <figcaption>Terrain Segmentation</figcaption>
-          </figure>
-          <figure data-full="/assets/gallery/gripper_auxetic_full.jpg">
-            <img src="/assets/gallery/gripper_auxetic_thumb.jpg" alt="">
-            <figcaption>Auxetic Hybrid Gripper</figcaption>
-          </figure>
-          <figure data-full="/assets/gallery/mars_outpost_full.jpg">
-            <img src="/assets/gallery/mars_outpost_thumb.jpg" alt="">
-            <figcaption>Mars Outpost Assembly</figcaption>
-          </figure>
+    <!-- Institutional Associations -->
+    <section aria-label="Institutional Associations">
+      <h2>Institutional Associations</h2>
+      <div class="inst-strip">
+        <div class="inst-card">
+          <a href="https://www.tohoku.ac.jp/en/" target="_blank" rel="noopener">
+            <img src="assets/logos/tohoku.png" alt="Tohoku University logo">
+            <span class="inst-name">Tohoku University (SRL)</span>
+          </a>
+        </div>
+        <div class="inst-card">
+          <a href="https://www.kyutech.ac.jp/english/" target="_blank" rel="noopener">
+            <img src="assets/logos/kyutech.png" alt="Kyushu Institute of Technology logo">
+            <span class="inst-name">Kyushu Institute of Technology</span>
+          </a>
+        </div>
+        <div class="inst-card">
+          <a href="https://www.ynu.ac.jp/english/" target="_blank" rel="noopener">
+            <img src="assets/logos/ynu.png" alt="Yokohama National University logo">
+            <span class="inst-name">Yokohama National University</span>
+          </a>
+        </div>
+        <div class="inst-card">
+          <a href="https://www.iitk.ac.in/" target="_blank" rel="noopener">
+            <img src="assets/logos/iitk.png" alt="IIT Kanpur logo">
+            <span class="inst-name">IIT Kanpur</span>
+          </a>
+        </div>
+        <div class="inst-card">
+          <a href="https://dst.gov.in/" target="_blank" rel="noopener">
+            <img src="assets/logos/dst-india.png" alt="DST India logo">
+            <span class="inst-name">Department of Science &amp; Technology (India)</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- Publications -->
-    <section id="publications">
-      <h2>Publications</h2>
-      <div class="card">
-        <b>Hybrid Robotic Meta-Gripper for Tomato Harvesting</b><br>
-        Ansari, S., Gupta, V., Bhattacharya, B. (2025). <i>arXiv:2510.10016</i>
+    <!-- Research Summary with background -->
+    <section id="summary" class="section-bg"
+      style="--bg-img: url('/assets/bg/moon_outpost.jpg')"
+      data-moon="/assets/bg/moon_outpost.jpg"
+      data-mars="/assets/bg/mars_outpost.jpg">
+      <h2>Research Summary</h2>
+      <div class="card content">
+        <p>I develop <b>autonomous robotic systems</b> for unstructured and extraterrestrial environments, integrating <b>mechanism design, sensing, and AI-based control</b>. My work spans <b>soft and reconfigurable robotics</b>, <b>robot perception</b>, and <b>reinforcement learning for adaptive autonomy</b>. At the <b>Space Robotics Laboratory (SRL), Tohoku University</b>, I contribute to Japan’s Moonshot R&amp;D Program on <b>reconfigurable robotic arms and intelligent control</b> for lunar surface operations. My goal is to advance <b>resilient robotic manipulation and mobility</b> for planetary exploration and human–robot collaboration.</p>
       </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
       <div class="card">
-        <b>Auxetic Structure-Based Gripper for Soft Fruits</b><br>
-        Ansari, S. et al. (2024). <i>Int. J. Intelligent Robotics & Applications</i>
+        <ul class="clean">
+          <li>
+            <div class="row">
+              <span class="title">Ph.D. in Robotics and Automation — Indian Institute of Technology Kanpur</span>
+              <span class="when">2025</span>
+            </div>
+            <div class="muted">Thesis: <i>Design and Development of a New Auxetic Structure-based Hybrid Gripper for Harvesting Tomato-like Soft Fruits.</i></div>
+          </li>
+          <li>
+            <div class="row">
+              <span class="title">M.E. in Engineering Mechanics — IIEST Shibpur, Kolkata</span>
+              <span class="when">2015</span>
+            </div>
+            <div class="muted">Thesis: <i>Design and Development of a Lower Limb Exoskeleton for Human Rehabilitation.</i></div>
+          </li>
+          <li>
+            <div class="row">
+              <span class="title">B.Tech in Mechanical Engineering — Kumaon Engineering College, Dwarahat</span>
+              <span class="when">2010</span>
+            </div>
+            <div class="muted">Thesis: <i>Design and Fabrication of an Aerial–Terrestrial Spy Robot.</i></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="interests">
+      <h2>Research Interests</h2>
+      <div class="card">
+        <div class="skills">
+          <span class="tag">Space &amp; Planetary Robotics</span>
+          <span class="tag">Autonomous Systems</span>
+          <span class="tag">Soft Robotics</span>
+          <span class="tag">Human–Robot Interaction</span>
+          <span class="tag">Mechanism Design</span>
+          <span class="tag">Robot Perception</span>
+          <span class="tag">AI-based Control</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Research Experience</h2>
+      <div class="card">
+        <ul class="clean">
+          <li>
+            <div class="row">
+              <span class="title">Postdoctoral Researcher — Tohoku University, Sendai, Japan</span>
+              <span class="when">Feb 2025–Present</span>
+            </div>
+            <div class="muted">Space Robotics Laboratory (Moonshot R&amp;D): Autonomous reconfigurable robotic systems for lunar exploration and habitat construction; retractable robotic arm design and RL-based control.</div>
+          </li>
+          <li>
+            <div class="row">
+              <span class="title">Principal Project Associate — IIT Kanpur, India</span>
+              <span class="when">Mar 2024–2025</span>
+            </div>
+            <div class="muted">DST-funded project: Electric stubble harvester and integrated baler for sustainable agro-residue management; autonomous control architecture and sensor fusion.</div>
+          </li>
+          <li>
+            <div class="row">
+              <span class="title">Joint Research Fellow — IIT Kanpur &amp; Yokohama National University</span>
+              <span class="when">Mar 2023–2025</span>
+            </div>
+            <div class="muted">Photoelasticity-based auxetic metastructure tactile sensors for soft fruit harvesting grippers.</div>
+          </li>
+          <li>
+            <div class="row">
+              <span class="title">Senior Research Associate — IIT Kanpur, India</span>
+              <span class="when">Jul 2022–Oct 2022</span>
+            </div>
+            <div class="muted">Autonomous robot for crop monitoring and localized pest neutralization (DST project).</div>
+          </li>
+          <li>
+            <div class="row">
+              <span class="title">Visiting Researcher — Wagatsuma Lab, Kyutech, Japan</span>
+              <span class="when">Feb 2020</span>
+            </div>
+            <div class="muted">Explored brain-inspired robotics principles for sensorimotor learning.</div>
+          </li>
+          <li>
+            <div class="row">
+              <span class="title">Research Associate — IIT Kanpur, India</span>
+              <span class="when">Nov 2017–Dec 2017</span>
+            </div>
+            <div class="muted">Exoskeleton robot for human hand support and rehabilitation (DST-funded).</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects with background -->
+    <section id="projects" class="section-bg"
+      style="--bg-img: url('/assets/bg/research_scene.png')">
+      <h2>Key Projects</h2>
+      <div class="content">
+        <div class="grid-2">
+          <div class="card">
+            <strong>Auxetic Hybrid Meta-Gripper for Soft Harvesting (PhD)</strong>
+            <ul>
+              <li>New auxetic structure–based hybrid gripper; precision tomato picking.</li>
+              <li>Built on soft robotics, force sensing, and robust mechanism design.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>Retractable Robotic Arm for Modular Lunar Robots (Postdoc)</strong>
+            <ul>
+              <li>Lightweight deployable arm for autonomous assembly and docking on the Moon.</li>
+              <li>Integration toward self-regenerating, reconfigurable robot teams.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>AI-Based Terrain Segmentation</strong>
+            <ul>
+              <li>YOLOv8-Seg + Depth for lunar-like terrain classification (ZED data).</li>
+              <li>Supports terrain-aware navigation and path planning.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>Self-Regenerating AI Robot Assembly</strong>
+            <ul>
+              <li>Cooperative docking, fault detection, and recovery.</li>
+              <li>Exploring VLMs for task-level decisions in reassembly.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Optional close-up background strip -->
+    <section class="section-bg" style="--bg-img: url('/assets/bg/moonbot.png')">
+      <h2>Modular Robot Close-up</h2>
+      <div class="content">
+        <p>Multi-limbed modular robot for terrain interaction and docking.</p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>Technical Skills</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="title">Programming</div>
+          <div class="muted">C, Python, MATLAB, LabVIEW</div>
+        </div>
+        <div class="card">
+          <div class="title">Frameworks</div>
+          <div class="muted">ROS, Reinforcement Learning frameworks</div>
+        </div>
+        <div class="card">
+          <div class="title">Simulation</div>
+          <div class="muted">Abaqus, ADAMS, SolidWorks, Inventor, AutoCAD</div>
+        </div>
+        <div class="card">
+          <div class="title">Hardware</div>
+          <div class="muted">Raspberry Pi 5, Arduino Mega, NVIDIA Jetson (Nano, AGX Orin), Intel RealSense, Zed 2 camera, ViperX 300 Arm</div>
+        </div>
+        <div class="card">
+          <div class="title">Expertise</div>
+          <div class="muted">Computer Vision, Control Theory, Machine Learning, Robot Design, Mechatronic Integration</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="publications">
+      <h2>Selected Publications</h2>
+      <div class="card">
+        <ul class="clean">
+          <li>
+            <span class="when">2025</span> — <span class="pub-title">“Hybrid Robotic Meta-gripper for Tomato Harvesting: Analysis of Auxetic Structures with Lattice Orientation Variations.”</span>
+            Ansari, S., Gupta, V., &amp; Bhattacharya, B.
+            <span class="badge">arXiv</span>
+            <span class="muted"><i>arXiv preprint</i> arXiv:2510.10016.</span>
+            <a href="https://doi.org/10.48550/arXiv.2510.10016" target="_blank" rel="noopener">DOI</a>
+          </li>
+          <li>
+            <span class="when">2024</span> — <span class="pub-title">“A New Auxetic Structure-based Hybrid Gripper for Harvesting Tomato-like Soft Fruits.”</span>
+            Ansari, S., Gohil, M. K., Maeda, Y., &amp; Bhattacharya, B.
+            <span class="muted"><i>International Journal of Intelligent Robotics and Applications</i>.</span>
+          </li>
+          <li>
+            <span class="when">Under Review</span> — <span class="pub-title">“Design and Analysis of a Novel Hybrid Robotic Meta-Gripper for Tomato Harvesting.”</span>
+            <span class="muted"><i>Advanced Intelligent Systems</i>, Wiley.</span>
+          </li>
+          <li>
+            <span class="when">Under Review</span> — <span class="pub-title">“Multi-objective Optimization of Hybrid Robotic Meta-Gripper Mechanism for Tomato Harvesting.”</span>
+            <span class="muted"><i>ASME Journal of Mechanisms and Robotics</i>.</span>
+          </li>
+          <li>
+            <span class="when">2022</span> — <span class="pub-title">“Design and Development of a Tomato Picking Soft Robotic Gripper with a Separator and Mechanical Iris-Based Pedicel Cutting Mechanism.”</span>
+            Ansari, S., &amp; Bhattacharya, B.
+            <span class="muted"><i>Advances in System-Integrated Intelligence</i>, Springer.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="talks">
+      <h2>Conference Presentations</h2>
+      <div class="card">
+        <ul class="clean">
+          <li><span class="when">2024</span> — “Tactile Sensor Based on Photoelastic Effect with Shape-Adaptive Auxetic Metastructure for Soft Fruit Harvesting.” <span class="muted"><i>IEEE ICRA 2024, Yokohama, Japan.</i></span></li>
+          <li><span class="when">2024</span> — “Enhancing Robotic Tomato Harvesting through a Hybrid Gripper using Semantic Segmentation and Keypoint Detection.” <span class="muted"><i>IEEE AIM 2024, Boston, USA.</i></span></li>
+          <li><span class="when">2017</span> — “Earthworm-like Modular Robot using Active Surface Gripping Mechanism for Peristaltic Locomotion.” <span class="muted"><i>Advances in Robotics 2017.</i></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="awards">
+      <h2>Awards &amp; Honors</h2>
+      <div class="card">
+        <ul class="clean">
+          <li>GATE Fellowship (MHRD, India) during post-graduation.</li>
+          <li>SAKURA Science Fellowship, Japan Science and Technology Agency.</li>
+          <li>Best Project Award: “Design and Fabrication of Aerial–Terrestrial Spy Robot.”</li>
+          <li>Founder and Head, Robotics and Mechatronics Laboratory, Ansal University (2016).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="memberships">
+      <h2>Professional Memberships</h2>
+      <div class="card">
+        <div class="skills">
+          <span class="tag">IEEE</span>
+          <span class="tag">IEEE RAS</span>
+          <span class="tag">Robotics Society of India</span>
+          <span class="tag">Sakura Science Club (JST)</span>
+          <span class="tag">Association of Mechanical Engineers, IIT Kanpur</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="references">
+      <h2>References</h2>
+      <div class="card">
+        <ul class="clean">
+          <li><b>Prof. Kazuya Yoshida</b> — Department of Mechanical and Aerospace Engineering, Tohoku University, Japan — <a href="mailto:yoshida@astro.mech.tohoku.ac.jp">yoshida@astro.mech.tohoku.ac.jp</a></li>
+          <li><b>Prof. Bishakh Bhattacharya</b> — Department of Mechanical Engineering, IIT Kanpur, India — <a href="mailto:bishakh@iitk.ac.in">bishakh@iitk.ac.in</a></li>
+          <li><b>Prof. Yusuke Maeda</b> — Division of Systems Research, Yokohama National University, Japan — <a href="mailto:maeda@ynu.ac.jp">maeda@ynu.ac.jp</a></li>
+          <li><b>Prof. Hiroaki Wagatsuma</b> — Department of Computer Science, Kyushu Institute of Technology, Japan — <a href="mailto:waga@brain.kyutech.ac.jp">waga@brain.kyutech.ac.jp</a></li>
+        </ul>
       </div>
     </section>
 
     <footer>
-      &copy; 2025 Shahid Ansari — Tohoku University, Space Robotics Lab.<br>
-      Images © SRL Moonshot Project. Portfolio hosted on GitHub Pages.
+      &copy; 2025 Shahid Ansari • Images: © Tohoku University Space Robotics Lab / Moonshot Project (used for academic portfolio). • Last updated: 19 Oct 2025
     </footer>
   </div>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <button class="close-btn" onclick="closeBox()">✕</button>
-    <button class="prev-btn" onclick="prevImg()">◀</button>
-    <img id="lbImg" src="">
-    <button class="next-btn" onclick="nextImg()">▶</button>
-    <div class="caption" id="lbCap"></div>
-  </div>
-
   <script>
-    // === Theme Toggle ===
+    // Theme switcher (Moon <-> Mars) with image swapping support
+    const btns = document.querySelectorAll('.toggle');
+
     function setTheme(t){
-      document.documentElement.setAttribute("data-theme", t);
-      localStorage.setItem("theme", t);
+      document.documentElement.setAttribute('data-theme', t);
+      btns.forEach(b => b.classList.toggle('active', b.dataset.setTheme === t));
+      // Swap section background images if data-moon/data-mars are provided
+      document.querySelectorAll('.section-bg').forEach(s=>{
+        const alt = s.dataset[t];
+        if(alt){ s.style.setProperty('--bg-img', `url('${alt}')`); }
+      });
+      try{ localStorage.setItem('planet-theme', t); }catch(e){}
     }
-    setTheme(localStorage.getItem("theme") || "moon");
 
-    // === Gallery Lightbox ===
-    const grid = document.getElementById("galleryGrid");
-    const box = document.getElementById("lightbox");
-    const lbImg = document.getElementById("lbImg");
-    const lbCap = document.getElementById("lbCap");
-    const figs = Array.from(grid.querySelectorAll("figure"));
-    let idx = 0;
+    // Restore previous choice
+    (function(){
+      let t = 'moon';
+      try{ t = localStorage.getItem('planet-theme') || 'moon'; }catch(e){}
+      setTheme(t);
+    })();
 
-    function openBox(i){
-      idx = i;
-      lbImg.src = figs[i].dataset.full;
-      lbCap.textContent = figs[i].querySelector("figcaption").innerText;
-      box.classList.add("open");
-    }
-    function closeBox(){ box.classList.remove("open"); }
-    function nextImg(){ idx = (idx+1)%figs.length; openBox(idx); }
-    function prevImg(){ idx = (idx-1+figs.length)%figs.length; openBox(idx); }
-
-    figs.forEach((f,i)=>f.onclick=()=>openBox(i));
-    box.onclick = e => { if(e.target===box) closeBox(); };
-    window.addEventListener("keydown",e=>{
-      if(!box.classList.contains("open")) return;
-      if(e.key==="Escape") closeBox();
-      if(e.key==="ArrowRight") nextImg();
-      if(e.key==="ArrowLeft") prevImg();
-    });
+    // Wire clicks
+    btns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
   </script>
 </body>
 </html>
