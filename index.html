@@ -13,7 +13,6 @@
     /* ===== Space Theme ===== */
     :root{
       --bg:#060815;            /* deep space */
-      --bg2:#0a1026;           /* nebula overlay */
       --text:#e8eef9;
       --muted:#9fb0cf;
       --accent:#7cc7ff;        /* ion blue */
@@ -25,7 +24,16 @@
       --radius:16px;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:radial-gradient(1200px 900px at 80% 10%, #16214a 0%, transparent 60%), radial-gradient(900px 700px at 10% 90%, #241c4a 0%, transparent 55%), var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.55}
+    html,body{
+      margin:0;padding:0;
+      background:
+        radial-gradient(1200px 900px at 80% 10%, #16214a 0%, transparent 60%),
+        radial-gradient(900px 700px at 10% 90%, #241c4a 0%, transparent 55%),
+        var(--bg);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      line-height:1.55
+    }
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
     .wrap{max-width:1100px;margin:0 auto;padding:24px}
@@ -37,12 +45,12 @@
     /* ===== Starfield layers ===== */
     .stars, .stars2, .stars3{
       position:fixed;inset:0;z-index:-3;background-repeat:repeat;
-      background-image: radial-gradient(1px 1px at 20px 30px, #bfe1ff 30%, transparent 31%),
-                        radial-gradient(1px 1px at 80px 120px, #cbbdff 30%, transparent 31%),
-                        radial-gradient(1px 1px at 200px 50px, #b3d4ff 30%, transparent 31%),
-                        radial-gradient(1px 1px at 300px 200px, #9fd7ff 30%, transparent 31%);
-      animation: drift 120s linear infinite;
-      opacity:.55;
+      background-image:
+        radial-gradient(1px 1px at 20px 30px, #bfe1ff 30%, transparent 31%),
+        radial-gradient(1px 1px at 80px 120px, #cbbdff 30%, transparent 31%),
+        radial-gradient(1px 1px at 200px 50px, #b3d4ff 30%, transparent 31%),
+        radial-gradient(1px 1px at 300px 200px, #9fd7ff 30%, transparent 31%);
+      animation: drift 120s linear infinite; opacity:.55;
     }
     .stars2{filter:blur(0.3px);opacity:.45;animation-duration:180s}
     .stars3{filter:blur(1px);opacity:.35;animation-duration:240s}
@@ -117,6 +125,24 @@
       content:"";display:block;height:1px;margin-top:10px;
       background:linear-gradient(90deg, transparent, rgba(124,199,255,.35), transparent)
     }
+
+    /* === Institutional logo strip === */
+    .inst-strip{ margin-top:16px; display:flex;flex-wrap:wrap;gap:14px;align-items:center }
+    .inst-card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(18,28,60,.55), rgba(10,16,38,.55));
+      backdrop-filter:blur(8px);
+      border-radius:12px;
+      padding:12px 16px;
+      display:flex;align-items:center;gap:12px;
+      box-shadow:var(--glow);
+      transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .inst-card:hover{ transform:translateY(-1px); box-shadow:0 0 22px rgba(124,199,255,.35) }
+    .inst-card img{ height:30px; width:auto; display:block; filter:grayscale(10%) contrast(105%); }
+    .inst-name{font-size:.96rem;color:var(--muted);white-space:nowrap}
+    .inst-card a{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
+    .inst-card a:hover{text-decoration:none}
   </style>
 
   <!-- Structured data -->
@@ -151,7 +177,7 @@
         <span class="chip" title="Address">
           <!-- location icon -->
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/></svg>
-          SRL, Tohoku University • Sendai, Japan
+          Space Robotics Laboratory (SRL), Tohoku University • Sendai, Japan
         </span>
         <a class="chip" href="tel:+819066831984">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.26 11.7 11.7 0 0 0 3.7.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 8a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.7 11.7 0 0 0 .6 3.7 1 1 0 0 1-.26 1l-2.24 2.1z"/></svg>
@@ -175,6 +201,48 @@
         </span>
       </div>
     </header>
+
+    <!-- Institutional Associations logo strip -->
+    <!-- Place the SVG/PNG files at: assets/logos/{tohoku.svg, kyutech.svg, ynu.svg, iitk.svg, dst-india.svg} -->
+    <section aria-label="Institutional Associations">
+      <h2>Institutional Associations</h2>
+      <div class="inst-strip">
+        <div class="inst-card">
+          <a href="https://www.tohoku.ac.jp/en/" target="_blank" rel="noopener">
+            <img src="assets/logos/tohoku.svg" alt="Tohoku University logo">
+            <span class="inst-name">Tohoku University (SRL)</span>
+          </a>
+        </div>
+
+        <div class="inst-card">
+          <a href="https://www.kyutech.ac.jp/english/" target="_blank" rel="noopener">
+            <img src="assets/logos/kyutech.svg" alt="Kyushu Institute of Technology logo">
+            <span class="inst-name">Kyushu Institute of Technology</span>
+          </a>
+        </div>
+
+        <div class="inst-card">
+          <a href="https://www.ynu.ac.jp/english/" target="_blank" rel="noopener">
+            <img src="assets/logos/ynu.svg" alt="Yokohama National University logo">
+            <span class="inst-name">Yokohama National University</span>
+          </a>
+        </div>
+
+        <div class="inst-card">
+          <a href="https://www.iitk.ac.in/" target="_blank" rel="noopener">
+            <img src="assets/logos/iitk.svg" alt="IIT Kanpur logo">
+            <span class="inst-name">IIT Kanpur</span>
+          </a>
+        </div>
+
+        <div class="inst-card">
+          <a href="https://dst.gov.in/" target="_blank" rel="noopener">
+            <img src="assets/logos/dst-india.svg" alt="DST India logo">
+            <span class="inst-name">Department of Science &amp; Technology (India)</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
     <section id="summary">
       <h2>Research Summary</h2>
@@ -317,7 +385,7 @@
           <li>
             <span class="when">2024</span> — <span class="pub-title">“A New Auxetic Structure-based Hybrid Gripper for Harvesting Tomato-like Soft Fruits.”</span>
             Ansari, S., Gohil, M. K., Maeda, Y., &amp; Bhattacharya, B.
-            <span class="muted"><i>International Journal of Intelligent Robotics and Applications.</i></span>
+            <span class="muted"><i>International Journal of Intelligent Robotics and Applications</i>.</span>
           </li>
           <li>
             <span class="when">Under Review</span> — <span class="pub-title">“Design and Analysis of a Novel Hybrid Robotic Meta-Gripper for Tomato Harvesting.”</span>
