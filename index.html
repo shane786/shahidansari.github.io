@@ -3,82 +3,176 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shahid Ansari — Portfolio</title>
+  <title>Shahid Ansari — Space Robotics</title>
   <meta name="description" content="Portfolio of Shahid Ansari, Postdoctoral Researcher in Space Robotics at Tohoku University.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
   <style>
+    /* ===== Space Theme ===== */
     :root{
-      --bg:#0f172a;
-      --panel:#0b1223;
-      --text:#e5e7eb;
-      --muted:#94a3b8;
-      --accent:#60a5fa;
-      --chip:#172554;
-      --border:#1f2937;
+      --bg:#060815;            /* deep space */
+      --bg2:#0a1026;           /* nebula overlay */
+      --text:#e8eef9;
+      --muted:#9fb0cf;
+      --accent:#7cc7ff;        /* ion blue */
+      --accent-2:#a78bfa;      /* violet */
+      --panel:rgba(16,24,48,.55);
+      --border:rgba(140,180,255,.18);
+      --chip:rgba(35,56,104,.55);
+      --glow:0 0 20px rgba(124,199,255,.25),0 0 40px rgba(167,139,250,.12);
+      --radius:16px;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.55}
+    html,body{margin:0;padding:0;background:radial-gradient(1200px 900px at 80% 10%, #16214a 0%, transparent 60%), radial-gradient(900px 700px at 10% 90%, #241c4a 0%, transparent 55%), var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.55}
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
     .wrap{max-width:1100px;margin:0 auto;padding:24px}
-    header{display:grid;grid-template-columns:1fr;gap:8px;padding:24px;border:1px solid var(--border);background:linear-gradient(180deg,var(--panel),#0a0f1e);border-radius:16px}
-    header h1{font-size:2rem;margin:0}
-    header .role{color:var(--muted);font-weight:600}
-    .contact{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px;color:var(--muted)}
-    .chip{display:inline-block;padding:6px 10px;border:1px solid var(--border);background:var(--chip);border-radius:999px;font-size:.9rem}
-    section{margin-top:28px;border-top:1px solid var(--border);padding-top:24px}
-    h2{font-size:1.35rem;margin:0 0 14px 0}
+    h1,h2{letter-spacing:.3px}
+    h1{font-family:Orbitron,Inter,system-ui,sans-serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,2.6rem);margin:0}
+    h2{font-family:Orbitron,Inter,system-ui,sans-serif;font-size:clamp(1.2rem,2.1vw,1.5rem);margin:0 0 14px 0;color:#dbe7ff}
+    .role{color:var(--muted);font-weight:600}
+
+    /* ===== Starfield layers ===== */
+    .stars, .stars2, .stars3{
+      position:fixed;inset:0;z-index:-3;background-repeat:repeat;
+      background-image: radial-gradient(1px 1px at 20px 30px, #bfe1ff 30%, transparent 31%),
+                        radial-gradient(1px 1px at 80px 120px, #cbbdff 30%, transparent 31%),
+                        radial-gradient(1px 1px at 200px 50px, #b3d4ff 30%, transparent 31%),
+                        radial-gradient(1px 1px at 300px 200px, #9fd7ff 30%, transparent 31%);
+      animation: drift 120s linear infinite;
+      opacity:.55;
+    }
+    .stars2{filter:blur(0.3px);opacity:.45;animation-duration:180s}
+    .stars3{filter:blur(1px);opacity:.35;animation-duration:240s}
+    @keyframes drift{from{background-position:0 0} to{background-position:-1000px -600px}}
+
+    /* ===== Header (planet + orbit) ===== */
+    header{
+      position:relative;overflow:hidden;
+      padding:28px;border:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(16,24,48,.7),rgba(10,16,38,.7));
+      border-radius:var(--radius);box-shadow:var(--glow)
+    }
+    .planet{
+      position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;
+      background:radial-gradient(circle at 35% 35%, #9bd2ff 0%, #5aa9ff 35%, #2c4f90 65%, #121b3d 100%);
+      box-shadow:inset -18px -22px 40px rgba(0,0,0,.35), 0 0 120px rgba(124,199,255,.25);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .ring{
+      position:absolute;right:-50px;top:10px;width:340px;height:340px;border-radius:50%;
+      border:1px dashed rgba(124,199,255,.18);
+      transform:rotate(25deg);
+      animation:orbit 28s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes orbit{to{transform:rotate(385deg)}}
+
+    /* ===== Chips ===== */
+    .contact{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border:1px solid var(--border);
+      background:var(--chip);backdrop-filter:blur(6px);
+      border-radius:999px;font-size:.92rem;color:var(--text);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .chip:hover{transform:translateY(-1px);box-shadow:var(--glow)}
+    .chip svg{width:16px;height:16px;opacity:.9}
+
+    /* ===== Sections / cards ===== */
+    section{margin-top:30px;border-top:1px solid var(--border);padding-top:22px}
+    .card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(18,28,60,.55), rgba(10,16,38,.55));
+      backdrop-filter:blur(8px);
+      border-radius:14px;padding:16px;box-shadow:var(--glow)
+    }
     .grid-2{display:grid;grid-template-columns:1fr;gap:16px}
     @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
-    .card{border:1px solid var(--border);background:linear-gradient(180deg,var(--panel),#0a0f1e);border-radius:14px;padding:16px}
     ul.clean{list-style:none;padding:0;margin:0}
-    ul.clean li+li{margin-top:10px}
-    .row{display:flex;justify-content:space-between;gap:12px}
+    ul.clean li+li{margin-top:12px}
+    .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     .when{color:var(--muted);white-space:nowrap}
-    .title{font-weight:600}
+    .title{font-weight:700}
     .muted{color:var(--muted)}
     .skills{display:flex;flex-wrap:wrap;gap:10px}
-    footer{margin:40px 0;color:var(--muted);font-size:.9rem}
+    .tag{
+      background:linear-gradient(180deg, rgba(36,56,120,.6), rgba(26,40,88,.6));
+      border:1px solid var(--border);padding:4px 10px;border-radius:10px;
+      font-size:.88rem;color:#d5e6ff
+    }
     .pub-title{font-style:italic}
-    .tag{background:var(--chip);border:1px solid var(--border);padding:2px 8px;border-radius:8px;font-size:.85rem;color:var(--muted)}
-    .refs{font-size:.95rem}
+    .badge{
+      display:inline-block;margin-left:8px;padding:2px 8px;border-radius:8px;font-size:.78rem;
+      color:#0b1223;background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      box-shadow:0 0 20px rgba(124,199,255,.35)
+    }
+    footer{margin:42px 0;color:var(--muted);font-size:.9rem;text-align:center}
+
+    /* subtle divider glow */
+    section>h2::after{
+      content:"";display:block;height:1px;margin-top:10px;
+      background:linear-gradient(90deg, transparent, rgba(124,199,255,.35), transparent)
+    }
   </style>
 
   <!-- Structured data -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Shahid Ansari",
-    "jobTitle": "Postdoctoral Researcher — Space Robotics",
-    "affiliation": [{
-      "@type": "Organization",
-      "name": "Space Robotics Laboratory (SRL), Tohoku University"
-    }],
-    "email": "mailto:ansari.shahid.b2@tohoku.ac.jp",
-    "url": "https://astro2.mech.tohoku.ac.jp/en",
-    "sameAs": [
-      "https://www.linkedin.com/in/shahid-ansari-aa48921a6"
-    ]
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Shahid Ansari",
+    "jobTitle":"Postdoctoral Researcher — Space Robotics",
+    "affiliation":[{"@type":"Organization","name":"Space Robotics Laboratory (SRL), Tohoku University"}],
+    "email":"mailto:ansari.shahid.b2@tohoku.ac.jp",
+    "url":"https://astro2.mech.tohoku.ac.jp/en",
+    "sameAs":["https://www.linkedin.com/in/shahid-ansari-aa48921a6"]
   }
   </script>
 </head>
 <body>
+  <!-- layered starfield -->
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
   <div class="wrap">
     <header>
-      <div>
-        <h1>Shahid Ansari</h1>
-        <div class="role">Postdoctoral Researcher — Space Robotics</div>
-      </div>
-      <div class="contact">
-        <span class="chip">Space Robotics Laboratory (SRL), Department of Aerospace Engineering, Graduate School of Engineering, Tohoku University • Sendai, Miyagi 980-8579, Japan</span>
-        <a class="chip" href="tel:+819066831984">+81 90-6683-1984</a>
-        <a class="chip" href="mailto:ansari.shahid.b2@tohoku.ac.jp">ansari.shahid.b2@tohoku.ac.jp</a>
-        <a class="chip" href="https://www.linkedin.com/in/shahid-ansari-aa48921a6" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="chip" href="https://astro2.mech.tohoku.ac.jp/en" target="_blank" rel="noopener">Homepage</a>
-        <span class="chip">Citizenship: Indian</span>
+      <div class="planet"></div>
+      <div class="ring"></div>
+
+      <h1>Shahid Ansari</h1>
+      <div class="role">Postdoctoral Researcher — Space Robotics</div>
+
+      <div class="contact" aria-label="Contact and links">
+        <span class="chip" title="Address">
+          <!-- location icon -->
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5z"/></svg>
+          SRL, Tohoku University • Sendai, Japan
+        </span>
+        <a class="chip" href="tel:+819066831984">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.26 11.7 11.7 0 0 0 3.7.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 8a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.7 11.7 0 0 0 .6 3.7 1 1 0 0 1-.26 1l-2.24 2.1z"/></svg>
+          +81 90-6683-1984
+        </a>
+        <a class="chip" href="mailto:ansari.shahid.b2@tohoku.ac.jp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16a2 2 0 0 1 2 2v.3l-10 6.25L2 8.3V8a2 2 0 0 1 2-2zm16 12H4a2 2 0 0 1-2-2V9.6l10 6.25 10-6.25V16a2 2 0 0 1-2 2z"/></svg>
+          ansari.shahid.b2@tohoku.ac.jp
+        </a>
+        <a class="chip" href="https://www.linkedin.com/in/shahid-ansari-aa48921a6" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 7.94A1.94 1.94 0 1 1 6.93 4a1.94 1.94 0 0 1 .01 3.94zM4.99 9h3.9v10h-3.9zM13 9c-2.2 0-3.7 1.2-3.7 4v6h3.9v-5c0-1.2.6-2 1.8-2 1.1 0 1.7.7 1.7 2v5h3.9v-5.9C20.6 10.6 18.9 9 16.2 9 14.9 9 13.8 9.6 13 10.5V9z"/></svg>
+          LinkedIn
+        </a>
+        <a class="chip" href="https://astro2.mech.tohoku.ac.jp/en" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17.9V13h4.9A8.01 8.01 0 0 1 13 19.9zM11 19.9A8.01 8.01 0 0 1 6.1 13H11v6.9zM6.1 11A8.01 8.01 0 0 1 11 4.1V11H6.1zM13 11V4.1A8.01 8.01 0 0 1 17.9 11H13z"/></svg>
+          Homepage
+        </a>
+        <span class="chip" title="Citizenship">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v14H3zM5 7v10h14V7z"/></svg>
+          Citizenship: Indian
+        </span>
       </div>
     </header>
 
@@ -214,15 +308,29 @@
       <div class="card">
         <ul class="clean">
           <li>
-            <span class="when">2025</span> — “Hybrid Robotic Meta-gripper for Tomato Harvesting: Analysis of Auxetic Structures with Lattice Orientation Variations.” Ansari, S., Gupta, V., &amp; Bhattacharya, B. <i>arXiv preprint</i> arXiv:2510.10016. <a href="https://doi.org/10.48550/arXiv.2510.10016" target="_blank" rel="noopener">DOI</a>
+            <span class="when">2025</span> — <span class="pub-title">“Hybrid Robotic Meta-gripper for Tomato Harvesting: Analysis of Auxetic Structures with Lattice Orientation Variations.”</span>
+            Ansari, S., Gupta, V., &amp; Bhattacharya, B.
+            <span class="badge">arXiv</span>
+            <span class="muted"><i>arXiv preprint</i> arXiv:2510.10016.</span>
+            <a href="https://doi.org/10.48550/arXiv.2510.10016" target="_blank" rel="noopener">DOI</a>
           </li>
           <li>
-            <span class="when">2024</span> — “A New Auxetic Structure-based Hybrid Gripper for Harvesting Tomato-like Soft Fruits.” Ansari, S., Gohil, M. K., Maeda, Y., &amp; Bhattacharya, B. <i>International Journal of Intelligent Robotics and Applications.</i>
+            <span class="when">2024</span> — <span class="pub-title">“A New Auxetic Structure-based Hybrid Gripper for Harvesting Tomato-like Soft Fruits.”</span>
+            Ansari, S., Gohil, M. K., Maeda, Y., &amp; Bhattacharya, B.
+            <span class="muted"><i>International Journal of Intelligent Robotics and Applications.</i></span>
           </li>
-          <li>Under Review — “Design and Analysis of a Novel Hybrid Robotic Meta-Gripper for Tomato Harvesting.” <i>Advanced Intelligent Systems</i>, Wiley.</li>
-          <li>Under Review — “Multi-objective Optimization of Hybrid Robotic Meta-Gripper Mechanism for Tomato Harvesting.” <i>ASME Journal of Mechanisms and Robotics.</i></li>
           <li>
-            <span class="when">2022</span> — “Design and Development of a Tomato Picking Soft Robotic Gripper with a Separator and Mechanical Iris-Based Pedicel Cutting Mechanism.” Ansari, S., &amp; Bhattacharya, B. <i>Advances in System-Integrated Intelligence</i>, Springer.
+            <span class="when">Under Review</span> — <span class="pub-title">“Design and Analysis of a Novel Hybrid Robotic Meta-Gripper for Tomato Harvesting.”</span>
+            <span class="muted"><i>Advanced Intelligent Systems</i>, Wiley.</span>
+          </li>
+          <li>
+            <span class="when">Under Review</span> — <span class="pub-title">“Multi-objective Optimization of Hybrid Robotic Meta-Gripper Mechanism for Tomato Harvesting.”</span>
+            <span class="muted"><i>ASME Journal of Mechanisms and Robotics</i>.</span>
+          </li>
+          <li>
+            <span class="when">2022</span> — <span class="pub-title">“Design and Development of a Tomato Picking Soft Robotic Gripper with a Separator and Mechanical Iris-Based Pedicel Cutting Mechanism.”</span>
+            Ansari, S., &amp; Bhattacharya, B.
+            <span class="muted"><i>Advances in System-Integrated Intelligence</i>, Springer.</span>
           </li>
         </ul>
       </div>
@@ -232,9 +340,9 @@
       <h2>Conference Presentations</h2>
       <div class="card">
         <ul class="clean">
-          <li>2024 — “Tactile Sensor Based on Photoelastic Effect with Shape-Adaptive Auxetic Metastructure for Soft Fruit Harvesting.” <i>IEEE ICRA 2024, Yokohama, Japan.</i></li>
-          <li>2024 — “Enhancing Robotic Tomato Harvesting through a Hybrid Gripper using Semantic Segmentation and Keypoint Detection.” <i>IEEE AIM 2024, Boston, USA.</i></li>
-          <li>2017 — “Earthworm-like Modular Robot using Active Surface Gripping Mechanism for Peristaltic Locomotion.” <i>Advances in Robotics 2017.</i></li>
+          <li><span class="when">2024</span> — “Tactile Sensor Based on Photoelastic Effect with Shape-Adaptive Auxetic Metastructure for Soft Fruit Harvesting.” <span class="muted"><i>IEEE ICRA 2024, Yokohama, Japan.</i></span></li>
+          <li><span class="when">2024</span> — “Enhancing Robotic Tomato Harvesting through a Hybrid Gripper using Semantic Segmentation and Keypoint Detection.” <span class="muted"><i>IEEE AIM 2024, Boston, USA.</i></span></li>
+          <li><span class="when">2017</span> — “Earthworm-like Modular Robot using Active Surface Gripping Mechanism for Peristaltic Locomotion.” <span class="muted"><i>Advances in Robotics 2017.</i></span></li>
         </ul>
       </div>
     </section>
@@ -266,7 +374,7 @@
 
     <section id="references">
       <h2>References</h2>
-      <div class="card refs">
+      <div class="card">
         <ul class="clean">
           <li><b>Prof. Kazuya Yoshida</b> — Department of Mechanical and Aerospace Engineering, Tohoku University, Japan — <a href="mailto:yoshida@astro.mech.tohoku.ac.jp">yoshida@astro.mech.tohoku.ac.jp</a></li>
           <li><b>Prof. Bishakh Bhattacharya</b> — Department of Mechanical Engineering, IIT Kanpur, India — <a href="mailto:bishakh@iitk.ac.in">bishakh@iitk.ac.in</a></li>
@@ -277,7 +385,7 @@
     </section>
 
     <footer>
-      &copy; 2025 Shahid Ansari. Last updated: 19 Oct 2025.
+      &copy; 2025 Shahid Ansari • Last updated: 19 Oct 2025
     </footer>
   </div>
 </body>
