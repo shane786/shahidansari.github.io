@@ -79,16 +79,14 @@
         radial-gradient(1px 1px at 80px 120px, var(--star2) 30%, transparent 31%),
         radial-gradient(1px 1px at 200px 50px, var(--star3) 30%, transparent 31%),
         radial-gradient(1px 1px at 300px 200px, var(--star4) 30%, transparent 31%);
-      animation: drift 120s linear infinite; opacity:.55;
-      pointer-events:none;
+      animation: drift 120s linear infinite; opacity:.55; pointer-events:none;
     }
     .stars2{filter:blur(0.3px);opacity:.45;animation-duration:180s}
     .stars3{filter:blur(1px);opacity:.35;animation-duration:240s}
     @keyframes drift{from{background-position:0 0} to{background-position:-1000px -600px}}
     .horizon{
       position:fixed;left:0;right:0;bottom:0;height:40vh;z-index:-2;
-      background:var(--horizon);
-      pointer-events:none;
+      background:var(--horizon); pointer-events:none;
     }
 
     /* ===== Header (planet + orbit) ===== */
@@ -191,6 +189,72 @@
     .inst-name{font-size:.96rem;color:var(--muted);white-space:nowrap}
     .inst-card a{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none}
     .inst-card a:hover{text-decoration:none}
+
+    /* ====== Section background helpers (new) ====== */
+    .section-bg {
+      position: relative; overflow: hidden;
+      border-radius: 14px; border: 1px solid var(--border);
+      background: #000; padding-top: 0;
+    }
+    .section-bg::before {
+      content: ""; position: absolute; inset: 0; z-index: 0;
+      background-image: var(--bg-img);
+      background-size: cover; background-position: center;
+      background-attachment: fixed; opacity: .35;
+      filter: saturate(1.05) contrast(1.05) brightness(0.9);
+    }
+    .section-bg .content {
+      position: relative; z-index: 1;
+      padding: 18px; background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.08));
+      border-radius: 14px;
+    }
+    @media (max-width: 800px){ .section-bg::before{ background-attachment: scroll; } }
+
+    /* ===== Gallery (new) ===== */
+    .gallery { margin-top: 8px; }
+    .gallery-grid{
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:14px;
+    }
+    .gallery figure{
+      margin:0; position:relative; overflow:hidden; cursor:pointer;
+      border:1px solid var(--border); border-radius:12px;
+      background:linear-gradient(180deg, rgba(18,28,60,.40), rgba(10,16,38,.40));
+      box-shadow:var(--glow);
+    }
+    .gallery img{
+      width:100%; height:180px; object-fit:cover; display:block;
+      transition: transform .35s ease, filter .35s ease;
+    }
+    .gallery figure:hover img{ transform:scale(1.03); filter:saturate(1.05) contrast(1.05) }
+    .gallery figcaption{
+      position:absolute; left:10px; bottom:8px; right:10px;
+      font-size:.88rem; color:#eaeefc; text-shadow:0 1px 3px rgba(0,0,0,.6);
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed; inset:0; display:none; z-index:9999;
+      background:rgba(0,0,0,.7); backdrop-filter:blur(4px);
+      align-items:center; justify-content:center;
+    }
+    .lightbox.open{ display:flex; }
+    .lightbox-inner{
+      position:relative; max-width:min(92vw,1200px); max-height:86vh;
+      background:linear-gradient(180deg,var(--panel),rgba(0,0,0,.3));
+      border:1px solid var(--border); border-radius:14px; box-shadow:var(--glow);
+      overflow:hidden; padding:10px;
+    }
+    .lightbox img{ display:block; max-width:100%; max-height:80vh; object-fit:contain; background:#000; border-radius:10px; }
+    .lb-caption{ padding:10px 4px; color:var(--text); font-size:.95rem; text-align:center; }
+    .lb-close, .lb-prev, .lb-next{
+      position:absolute; background:var(--chip); border:1px solid var(--border);
+      color:var(--text); padding:6px 10px; border-radius:999px; cursor:pointer;
+      user-select:none; backdrop-filter:blur(6px);
+    }
+    .lb-close{ right:14px; top:14px; }
+    .lb-prev{ left:14px; top:50%; transform:translateY(-50%); }
+    .lb-next{ right:14px; top:50%; transform:translateY(-50%); }
+    .lb-prev:hover, .lb-next:hover, .lb-close:hover{ box-shadow:var(--glow); }
   </style>
 
   <!-- Structured data -->
@@ -291,14 +355,21 @@
       </div>
     </section>
 
-    <!-- Your existing sections (unchanged markup) -->
-    <section id="summary">
+    <!-- === BACKGROUNDED SUMMARY SECTION (add images) ===
+         Put images at:
+           /assets/bg/moon_outpost.jpg
+           /assets/bg/mars_outpost.jpg   (optional; used when theme = mars) -->
+    <section id="summary" class="section-bg"
+             style="--bg-img: url('/assets/bg/moon_outpost.jpg')"
+             data-moon="/assets/bg/moon_outpost.jpg"
+             data-mars="/assets/bg/mars_outpost.jpg">
       <h2>Research Summary</h2>
-      <div class="card">
+      <div class="card content">
         <p>I develop <b>autonomous robotic systems</b> for unstructured and extraterrestrial environments, integrating <b>mechanism design, sensing, and AI-based control</b>. My work spans <b>soft and reconfigurable robotics</b>, <b>robot perception</b>, and <b>reinforcement learning for adaptive autonomy</b>. At the <b>Space Robotics Laboratory (SRL), Tohoku University</b>, I contribute to Japan’s Moonshot R&amp;D Program on <b>reconfigurable robotic arms and intelligent control</b> for lunar surface operations. My goal is to advance <b>resilient robotic manipulation and mobility</b> for planetary exploration and human–robot collaboration.</p>
       </div>
     </section>
 
+    <!-- Education -->
     <section id="education">
       <h2>Education</h2>
       <div class="card">
@@ -488,6 +559,49 @@
       </div>
     </section>
 
+    <!-- === GALLERY SECTION (add images) ===
+         Put thumbnails/full images in /assets/gallery/
+           moon_outpost_thumb.jpg, moon_outpost_full.jpg, etc. -->
+    <section id="gallery" class="section-bg"
+             style="--bg-img: url('/assets/bg/research_scene.png')"
+             data-moon="/assets/bg/research_scene.png"
+             data-mars="/assets/bg/mars_outpost.jpg">
+      <h2>Gallery — Lunar &amp; Martian Operations</h2>
+      <div class="content gallery">
+        <div class="gallery-grid" id="galleryGrid">
+          <figure data-full="/assets/gallery/moon_outpost_full.jpg" data-caption="Lunar outpost concept — modular robots assembling truss sections.">
+            <img src="/assets/gallery/moon_outpost_thumb.jpg" alt="Lunar outpost, modular construction">
+            <figcaption>Lunar Outpost Construction</figcaption>
+          </figure>
+
+          <figure data-full="/assets/gallery/rover_docking_full.jpg" data-caption="Docking sequence for payload transfer (stereo vision).">
+            <img src="/assets/gallery/rover_docking_thumb.jpg" alt="Rover docking sequence">
+            <figcaption>Rover Docking</figcaption>
+          </figure>
+
+          <figure data-full="/assets/gallery/arm_deploy_full.jpg" data-caption="Retractable CFRP arm deployment test on regolith simulant.">
+            <img src="/assets/gallery/arm_deploy_thumb.jpg" alt="Retractable arm deployment">
+            <figcaption>Arm Deployment</figcaption>
+          </figure>
+
+          <figure data-full="/assets/gallery/terrain_seg_full.jpg" data-caption="YOLOv8-Seg + Depth clustering for traversability.">
+            <img src="/assets/gallery/terrain_seg_thumb.jpg" alt="Terrain segmentation overlay">
+            <figcaption>Terrain Segmentation</figcaption>
+          </figure>
+
+          <figure data-full="/assets/gallery/gripper_auxetic_full.jpg" data-caption="Auxetic–rigid hybrid gripper prototype for delicate handling.">
+            <img src="/assets/gallery/gripper_auxetic_thumb.jpg" alt="Auxetic hybrid gripper">
+            <figcaption>Auxetic Gripper</figcaption>
+          </figure>
+
+          <figure data-full="/assets/gallery/mars_outpost_full.jpg" data-caption="Martian habitat assembly with cooperative rovers.">
+            <img src="/assets/gallery/mars_outpost_thumb.jpg" alt="Martian outpost assembly">
+            <figcaption>Mars Outpost</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <section id="references">
       <h2>References</h2>
       <div class="card">
@@ -505,24 +619,90 @@
     </footer>
   </div>
 
+  <!-- Lightbox modal -->
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+    <div class="lightbox-inner">
+      <button class="lb-close" aria-label="Close">&times; Close</button>
+      <button class="lb-prev" aria-label="Previous">&#9664;</button>
+      <img id="lbImg" alt="">
+      <button class="lb-next" aria-label="Next">&#9654;</button>
+      <div class="lb-caption" id="lbCaption"></div>
+    </div>
+  </div>
+
   <script>
-    // Theme switcher (Moon <-> Mars)
-    const root = document.documentElement;
+    // Theme switcher (Moon <-> Mars) + swap background images on section-bg
     const btns = document.querySelectorAll('.toggle');
     function setTheme(t){
       document.documentElement.setAttribute('data-theme', t);
       btns.forEach(b => b.classList.toggle('active', b.dataset.setTheme === t));
-      // Persist choice
+      // swap any section backgrounds that provide data-moon / data-mars
+      document.querySelectorAll('.section-bg').forEach(s=>{
+        const alt = s.dataset[t];
+        if(alt){ s.style.setProperty('--bg-img', `url('${alt}')`); }
+      });
       try{ localStorage.setItem('planet-theme', t); }catch(e){}
     }
-    // Restore previous choice
-    try{
-      const t = localStorage.getItem('planet-theme');
-      if(t){ setTheme(t); }
-      else { setTheme('moon'); }
-    }catch(e){ setTheme('moon'); }
-    // Wire clicks
+    (function(){
+      let t = 'moon';
+      try{ t = localStorage.getItem('planet-theme') || 'moon'; }catch(e){}
+      setTheme(t);
+    })();
     btns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
+
+    // ===== Simple Lightbox for Gallery =====
+    (function(){
+      const grid = document.getElementById('galleryGrid');
+      if(!grid) return;
+      const box  = document.getElementById('lightbox');
+      const img  = document.getElementById('lbImg');
+      const cap  = document.getElementById('lbCaption');
+      const prev = box.querySelector('.lb-prev');
+      const next = box.querySelector('.lb-next');
+      const close= box.querySelector('.lb-close');
+
+      let items = [];
+      let idx = 0;
+
+      function openAt(i){
+        idx = i;
+        const el = items[idx];
+        img.src = el.dataset.full;
+        img.alt = el.querySelector('img').alt || '';
+        cap.textContent = el.dataset.caption || el.querySelector('figcaption')?.textContent || '';
+        box.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeBox(){
+        box.classList.remove('open');
+        img.src = '';
+        document.body.style.overflow = '';
+      }
+      function show(delta){
+        idx = (idx + delta + items.length) % items.length;
+        openAt(idx);
+      }
+      function setup(){
+        items = Array.from(grid.querySelectorAll('figure'));
+        items.forEach((f, i)=>{
+          f.addEventListener('click', ()=>openAt(i));
+          f.tabIndex = 0;
+          f.addEventListener('keydown', (e)=>{ if(e.key==='Enter') openAt(i); });
+        });
+      }
+      setup();
+
+      prev.addEventListener('click', ()=>show(-1));
+      next.addEventListener('click', ()=>show(+1));
+      close.addEventListener('click', closeBox);
+      box.addEventListener('click', (e)=>{ if(e.target === box) closeBox(); });
+      window.addEventListener('keydown', (e)=>{
+        if(!box.classList.contains('open')) return;
+        if(e.key === 'Escape') closeBox();
+        else if(e.key === 'ArrowLeft') show(-1);
+        else if(e.key === 'ArrowRight') show(+1);
+      }, {passive:true});
+    })();
   </script>
 </body>
 </html>
